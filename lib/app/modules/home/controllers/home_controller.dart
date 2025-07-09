@@ -157,45 +157,45 @@ class HomeController extends GetxController {
   }
 
   /// Add new task
-  void addTask() {
-    // For demo purposes, show a simple dialog
-    Get.dialog(
-      AlertDialog(
-        title: const Text('Add New Task'),
-        content: const Text('Task creation form will be implemented here.'),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              // Add a sample task
-              final newTask = {
-                'id': tasks.length + 1,
-                'title': 'New Task ${tasks.length + 1}',
-                'priority': 'Medium',
-                'dueDate': 'Today',
-                'isCompleted': false,
-              };
+  // void addTask() {
+  //   // For demo purposes, show a simple dialog
+  //   Get.dialog(
+  //     AlertDialog(
+  //       title: const Text('Add New Task'),
+  //       content: const Text('Task creation form will be implemented here.'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Get.back(),
+  //           child: const Text('Cancel'),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             // Add a sample task
+  //             final newTask = {
+  //               'id': tasks.length + 1,
+  //               'title': 'New Task ${tasks.length + 1}',
+  //               'priority': 'Medium',
+  //               'dueDate': 'Today',
+  //               'isCompleted': false,
+  //             };
               
-              tasks.add(newTask);
-              Get.back();
+  //             tasks.add(newTask);
+  //             Get.back();
               
-              Get.snackbar(
-                'Success',
-                'New task added successfully!',
-                snackPosition: SnackPosition.BOTTOM,
-                backgroundColor: Colors.green,
-                colorText: Colors.white,
-              );
-            },
-            child: const Text('Add'),
-          ),
-        ],
-      ),
-    );
-  }
+  //             Get.snackbar(
+  //               'Success',
+  //               'New task added successfully!',
+  //               snackPosition: SnackPosition.BOTTOM,
+  //               backgroundColor: Colors.green,
+  //               colorText: Colors.white,
+  //             );
+  //           },
+  //           child: const Text('Add'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   /// Delete task
   void deleteTask(int taskId) {

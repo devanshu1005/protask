@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:protask1/app/routes/app_pages.dart';
 import 'package:protask1/app/themes/app_colors.dart';
 import 'package:protask1/app/themes/app_fonts.dart';
 import '../controllers/home_controller.dart';
@@ -28,25 +29,57 @@ class HomeView extends GetView<HomeController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Greeting
-                    Text(
-                      'Good morning,',
-                      style: AppFonts.bodyLarge.copyWith(
-                        color: AppColors.textWhite.withOpacity(0.9),
-                        fontSize: 16,
-                      ),
+                    // Row for greeting and avatar
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Greeting
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Good morning,',
+                              style: AppFonts.bodyLarge.copyWith(
+                                color: AppColors.textWhite.withOpacity(0.9),
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'John Doe',
+                              style: AppFonts.heading2.copyWith(
+                                color: AppColors.textWhite,
+                                fontSize: 24,
+                                fontWeight: AppFonts.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        // Profile Avatar
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.PROFILE_SCREEN);
+                          },
+                          child: CircleAvatar(
+                            radius: 24,
+                            backgroundColor: Colors.white24,
+                            child: Text(
+                              'JD',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'John Doe',
-                      style: AppFonts.heading2.copyWith(
-                        color: AppColors.textWhite,
-                        fontSize: 24,
-                        fontWeight: AppFonts.bold,
-                      ),
-                    ),
+
                     const SizedBox(height: 24),
-                    
+
                     // Stats Row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -59,40 +92,45 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Filter Tabs
               Row(
                 children: [
-                  Obx(() => _buildFilterTab('All', controller.selectedFilter.value == 'All')),
+                  Obx(() => _buildFilterTab(
+                      'All', controller.selectedFilter.value == 'All')),
                   const SizedBox(width: 8),
-                  Obx(() => _buildFilterTab('Pending', controller.selectedFilter.value == 'Pending')),
+                  Obx(() => _buildFilterTab(
+                      'Pending', controller.selectedFilter.value == 'Pending')),
                   const SizedBox(width: 8),
-                  Obx(() => _buildFilterTab('Completed', controller.selectedFilter.value == 'Completed')),
+                  Obx(() => _buildFilterTab('Completed',
+                      controller.selectedFilter.value == 'Completed')),
                 ],
               ),
-              
+
               const SizedBox(height: 20),
-              
+
               // Tasks List
               Expanded(
                 child: Obx(() => ListView.builder(
-                  itemCount: controller.filteredTasks.length,
-                  itemBuilder: (context, index) {
-                    final task = controller.filteredTasks[index];
-                    return _buildTaskItem(task);
-                  },
-                )),
+                      itemCount: controller.filteredTasks.length,
+                      itemBuilder: (context, index) {
+                        final task = controller.filteredTasks[index];
+                        return _buildTaskItem(task);
+                      },
+                    )),
               ),
             ],
           ),
         ),
       ),
-      
+
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
-        onPressed: controller.addTask,
+        onPressed: () {
+          Get.toNamed(Routes.ADD_EDIT_TASK);
+        },
         backgroundColor: AppColors.primary,
         child: const Icon(
           Icons.add,
@@ -153,7 +191,7 @@ class HomeView extends GetView<HomeController> {
   Widget _buildTaskItem(Map<String, dynamic> task) {
     final isCompleted = task['isCompleted'] as bool;
     final priority = task['priority'] as String;
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -190,9 +228,9 @@ class HomeView extends GetView<HomeController> {
                   : null,
             ),
           ),
-          
+
           const SizedBox(width: 16),
-          
+
           // Task Content
           Expanded(
             child: Column(
@@ -202,24 +240,25 @@ class HomeView extends GetView<HomeController> {
                 Text(
                   task['title'],
                   style: AppFonts.bodyMedium.copyWith(
-                    color: isCompleted 
-                        ? AppColors.textMuted 
+                    color: isCompleted
+                        ? AppColors.textMuted
                         : AppColors.textPrimary,
-                    decoration: isCompleted 
-                        ? TextDecoration.lineThrough 
+                    decoration: isCompleted
+                        ? TextDecoration.lineThrough
                         : TextDecoration.none,
                     fontWeight: AppFonts.medium,
                   ),
                 ),
-                
+
                 const SizedBox(height: 8),
-                
+
                 // Priority and Due Date
                 Row(
                   children: [
                     // Priority Badge
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: AppColors.getPriorityBackgroundColor(priority),
                         borderRadius: BorderRadius.circular(8),
@@ -233,9 +272,9 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    
+
                     const SizedBox(width: 16),
-                    
+
                     // Due Date
                     Text(
                       'Due: ${task['dueDate']}',

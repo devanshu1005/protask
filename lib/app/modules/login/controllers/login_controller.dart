@@ -104,13 +104,14 @@ class LoginController extends GetxController {
     // Get.toNamed('/forgot-password');
     
     // For demo purposes, just show message
-    Get.snackbar(
-      'Info',
-      'Forgot password functionality will be implemented',
-      snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.blue,
-      colorText: Colors.white,
-    );
+    // Get.snackbar(
+    //   'Info',
+    //   'Forgot password functionality will be implemented',
+    //   snackPosition: SnackPosition.TOP,
+    //   backgroundColor: Colors.blue,
+    //   colorText: Colors.white,
+    // );
+    Get.toNamed(Routes.FORGOT_PASSWORD);
   }
 
   /// Navigate to sign up screen
@@ -119,13 +120,14 @@ class LoginController extends GetxController {
     // Get.toNamed('/sign-up');
     
     // For demo purposes, just show message
-    Get.snackbar(
-      'Info',
-      'Sign up screen will be implemented',
-      snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.blue,
-      colorText: Colors.white,
-    );
+    Get.toNamed(Routes.SIGNUP);
+    // Get.snackbar(
+    //   'Info',
+    //   'Sign up screen will be implemented',
+    //   snackPosition: SnackPosition.TOP,
+    //   backgroundColor: Colors.blue,
+    //   colorText: Colors.white,
+    // );
   }
 
   /// Clear form fields
