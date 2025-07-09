@@ -1,0 +1,1 @@
+ /Users/tch/workspace/protask/.dart_tool/flutter_build/44f9e77313e82f8856a7ce730d2ace33/native_assets.yaml: 
