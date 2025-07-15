@@ -10,12 +10,16 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/profile_screen/bindings/profile_screen_binding.dart';
 import '../modules/profile_screen/views/profile_screen_view.dart';
+import '../modules/reset_password/bindings/reset_password_binding.dart';
+import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/verify_otp/bindings/verify_otp_binding.dart';
 import '../modules/verify_otp/views/verify_otp_view.dart';
+import '../modules/verify_otp_forgot_password/bindings/verify_otp_forgot_password_binding.dart';
+import '../modules/verify_otp_forgot_password/views/verify_otp_forgot_password_view.dart';
 
 part 'app_routes.dart';
 
@@ -64,6 +68,16 @@ class AppPages {
       name: _Paths.VERIFY_OTP,
       page: () => const VerifyOtpView(),
       binding: VerifyOtpBinding(),
+    ),
+    GetPage(
+      name: _Paths.VERIFY_OTP_FORGOT_PASSWORD,
+      page: () => const VerifyOtpForgotPasswordView(),
+      binding: VerifyOtpForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PASSWORD,
+      page: () => const ResetPasswordView(),
+      binding: ResetPasswordBinding(),
     ),
   ];
 }

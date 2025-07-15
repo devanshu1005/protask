@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:protask1/app/routes/app_pages.dart';
+import 'package:protask1/app/services/call_helper.dart';
+import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
+import 'package:protask1/app/utils/widgets/loader_view.dart';
 
 class ForgotPasswordController extends GetxController {
-  // Form controller
   final TextEditingController emailController = TextEditingController();
-  
-  // Observable variables
-  final RxBool isLoading = false.obs;
-  final RxString message = ''.obs;
-  final RxBool isSuccess = false.obs;
-  final RxBool isEmailSent = false.obs;
-  
+
   @override
   void onInit() {
     super.onInit();
-    // Clear message when email changes
-    emailController.addListener(() {
-      if (message.value.isNotEmpty) {
-        message.value = '';
-      }
-    });
   }
 
   @override
@@ -33,98 +24,65 @@ class ForgotPasswordController extends GetxController {
     super.onClose();
   }
 
-  // Validate email
   bool validateEmail() {
     final email = emailController.text.trim();
-    
+
     if (email.isEmpty) {
-      showMessage('Please enter your email address', false);
+      DialogHelper.showError('Please enter your email address');
       return false;
     }
-    
+
     if (!GetUtils.isEmail(email)) {
-      showMessage('Please enter a valid email address', false);
+      DialogHelper.showError('Please enter a valid email address');
       return false;
     }
-    
+
     return true;
   }
-  
-  // Show message
-  void showMessage(String msg, bool success) {
-    message.value = msg;
-    isSuccess.value = success;
-  }
-  
-  // Clear message
-  void clearMessage() {
-    message.value = '';
-  }
-  
-  // Reset password function
-  Future<void> resetPassword() async {
+
+  Future<void> sendOtp() async {
     if (!validateEmail()) return;
-    
+    if (emailController.text.trim().isEmpty) {
+      DialogHelper.showError('Please enter your email');
+      return;
+    }
+
+    if (!GetUtils.isEmail(emailController.text.trim())) {
+      DialogHelper.showError('Please enter a valid email address');
+      return;
+    }
+
     try {
-      isLoading.value = true;
-      clearMessage();
-      
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 2));
-      
-      // TODO: Implement your forgot password logic here
-      // Example: await AuthService.sendPasswordResetEmail(
-      //   email: emailController.text.trim(),
-      // );
-      
-      // Simulate successful response
-      final email = emailController.text.trim();
-      isEmailSent.value = true;
-      
-      showMessage(
-        'Password reset link has been sent to $email. Please check your inbox and follow the instructions.',
-        true,
+      LoaderView.customLogoLoader();
+      final response = await CallHelper().post(
+        '/auth/send-otp',
+        data: {
+          "email": emailController.text.trim(),
+        },
       );
-      
-      // Auto-hide success message after 5 seconds
-      Future.delayed(const Duration(seconds: 5), () {
-        if (message.value.isNotEmpty && isSuccess.value) {
-          clearMessage();
-        }
-      });
-      
+
+      LoaderView.hideLoading();
+
+      if (response != null && response['success'] == true) {
+        DialogHelper.showSuccess('OTP sent successfully!');
+        Get.toNamed(Routes.VERIFY_OTP_FORGOT_PASSWORD, arguments: {'emailId': emailController.text.trim(),});
+      } else {
+        DialogHelper.showError(response['message'] ?? 'Failed to send OTP');
+      }
     } catch (e) {
-      showMessage(
-        'Failed to send reset link. Please try again later.',
-        false,
-      );
+      DialogHelper.showError('Something went wrong. Please try again.');
     } finally {
-      isLoading.value = false;
+      LoaderView.hideLoading();
     }
   }
-  
-  // Resend email
-  Future<void> resendEmail() async {
-    if (isEmailSent.value) {
-      await resetPassword();
-    }
-  }
-  
-  // Navigate back to login
+
   void backToLogin() {
     Get.back();
   }
-  
-  // Clear form
+
   void clearForm() {
     emailController.clear();
-    clearMessage();
-    isEmailSent.value = false;
   }
-  
-  // Check if email was sent
-  bool get emailWasSent => isEmailSent.value;
-  
-  // Get email for display
+
   String get currentEmail => emailController.text.trim();
 }

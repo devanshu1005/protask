@@ -11,6 +11,8 @@ abstract class Routes {
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
   static const PROFILE_SCREEN = _Paths.PROFILE_SCREEN;
   static const VERIFY_OTP = _Paths.VERIFY_OTP;
+  static const VERIFY_OTP_FORGOT_PASSWORD = _Paths.VERIFY_OTP_FORGOT_PASSWORD;
+  static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
 }
 
 abstract class _Paths {
@@ -23,4 +25,6 @@ abstract class _Paths {
   static const FORGOT_PASSWORD = '/forgot-password';
   static const PROFILE_SCREEN = '/profile-screen';
   static const VERIFY_OTP = '/verify-otp';
+  static const VERIFY_OTP_FORGOT_PASSWORD = '/verify-otp-forgot-password';
+  static const RESET_PASSWORD = '/reset-password';
 }
