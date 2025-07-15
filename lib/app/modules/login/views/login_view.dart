@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:protask1/app/themes/app_colors.dart';
 import 'package:protask1/app/themes/app_fonts.dart';
+import 'package:protask1/app/utils/widgets/common_input_field.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -19,8 +20,8 @@ class LoginView extends GetView<LoginController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 60),
-              
-              // Welcome Back Title
+
+              // Welcome Title
               Text(
                 'Welcome Back',
                 style: AppFonts.heading1.copyWith(
@@ -29,10 +30,9 @@ class LoginView extends GetView<LoginController> {
                   fontWeight: AppFonts.bold,
                 ),
               ),
-              
+
               const SizedBox(height: 8),
-              
-              // Sign in subtitle
+
               Text(
                 'Sign in to continue',
                 style: AppFonts.bodyLarge.copyWith(
@@ -40,107 +40,30 @@ class LoginView extends GetView<LoginController> {
                   fontSize: 18,
                 ),
               ),
-              
+
               const SizedBox(height: 60),
-              
-              // Email Label
-              Text(
-                'Email',
-                style: AppFonts.formLabel.copyWith(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  fontWeight: AppFonts.medium,
-                ),
+
+              // Email Field
+              CommonInputField(
+                icon: Icons.email_outlined,
+                hintText: 'Enter your email',
+                controller: controller.emailController,
+                keyboardType: TextInputType.emailAddress,
               ),
-              
-              const SizedBox(height: 8),
-              
-              // Email TextField
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: AppColors.borderLight,
-                    width: 1,
-                  ),
-                ),
-                child: TextField(
-                  controller: controller.emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  style: AppFonts.formField.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: 'enter your email',
-                    hintStyle: AppFonts.formField.copyWith(
-                      color: AppColors.textMuted,
-                    ),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                  ),
-                ),
-              ),
-              
+
               const SizedBox(height: 24),
-              
-              // Password Label
-              Text(
-                'Password',
-                style: AppFonts.formLabel.copyWith(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  fontWeight: AppFonts.medium,
-                ),
+
+              // Password Field
+              CommonInputField(
+                icon: Icons.lock_outline,
+                hintText: '••••••••',
+                controller: controller.passwordController,
+                isPassword: true,
+                isVisibleObs: controller.isPasswordObscured,
               ),
-              
-              const SizedBox(height: 8),
-              
-              // Password TextField
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: AppColors.borderLight,
-                    width: 1,
-                  ),
-                ),
-                child: Obx(() => TextField(
-                  controller: controller.passwordController,
-                  obscureText: controller.isPasswordObscured.value,
-                  style: AppFonts.formField.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: '••••••••',
-                    hintStyle: AppFonts.formField.copyWith(
-                      color: AppColors.textMuted,
-                      fontSize: 18,
-                    ),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        controller.isPasswordObscured.value
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: AppColors.textMuted,
-                      ),
-                      onPressed: controller.togglePasswordVisibility,
-                    ),
-                  ),
-                )),
-              ),
-              
+
               const SizedBox(height: 40),
-              
+
               // Sign In Button
               SizedBox(
                 width: double.infinity,
@@ -165,9 +88,9 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Forgot Password
               Center(
                 child: TextButton(
@@ -183,9 +106,9 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
-              
+
               const Spacer(),
-              
+
               // Sign Up Link
               Center(
                 child: Row(
@@ -219,7 +142,7 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 24),
             ],
           ),

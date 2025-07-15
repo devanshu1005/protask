@@ -151,10 +151,10 @@ class VerifyOtpController extends GetxController {
       LoaderView.hideLoading();
 
       if (response != null && response['success'] == true) {
-        Get.offAllNamed(Routes.HOME);
+        Get.offAllNamed(Routes.LOGIN);
 
-        await Future.delayed(const Duration(seconds: 1));
-        Get.offAllNamed(Routes.HOME); // Replace as needed
+        // await Future.delayed(const Duration(seconds: 1));
+        // Get.offAllNamed(Routes.HOME); // Replace as needed
       } else {
         DialogHelper.showError(
             response['message'] ?? 'Account creation failed.');

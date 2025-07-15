@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:protask1/app/utils/app_globals.dart';
 import '../controllers/profile_screen_controller.dart';
 
 class ProfileScreenView extends GetView<ProfileScreenController> {
@@ -109,7 +110,8 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                   ),
                   _buildMenuItem(
                     icon: Icons.lock_outline,
-                    iconColor: const Color(0xFF64748B), // AppColors.textSecondary
+                    iconColor:
+                        const Color(0xFF64748B), // AppColors.textSecondary
                     title: 'Privacy',
                     onTap: () {
                       // Handle privacy
@@ -122,6 +124,7 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                     title: 'Logout',
                     onTap: () {
                       // Handle logout
+                      AppGlobals.instance.logout();
                     },
                     showArrow: false,
                   ),

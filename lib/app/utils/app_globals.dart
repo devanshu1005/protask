@@ -69,10 +69,11 @@ class AppGlobals {
     await prefs.remove('profileImageUrl');
   }
 
-  Future<void> logout(
-      {String message = "Session expired. Please login again."}) async {
+  Future<void> logout({String? message}) async {
     await clear();
     Get.offAllNamed(Routes.LOGIN);
-    DialogHelper.showError(message);
+    if (message != null && message.isNotEmpty) {
+      DialogHelper.showError(message);
+    }
   }
 }
