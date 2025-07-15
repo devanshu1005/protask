@@ -14,6 +14,8 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/verify_otp/bindings/verify_otp_binding.dart';
+import '../modules/verify_otp/views/verify_otp_view.dart';
 
 part 'app_routes.dart';
 
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.PROFILE_SCREEN,
       page: () => const ProfileScreenView(),
       binding: ProfileScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.VERIFY_OTP,
+      page: () => const VerifyOtpView(),
+      binding: VerifyOtpBinding(),
     ),
   ];
 }

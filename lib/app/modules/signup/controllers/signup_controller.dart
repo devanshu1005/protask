@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:protask1/app/routes/app_pages.dart';
+import 'package:protask1/app/services/call_helper.dart';
+import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
+import 'package:protask1/app/utils/widgets/loader_view.dart';
 
 class SignupController extends GetxController {
   // Form controllers
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
-  
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  final TextEditingController mobileNumberController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+
   // Observable variables
   final RxBool isPasswordHidden = true.obs;
   final RxBool isConfirmPasswordHidden = true.obs;
-  final RxBool isLoading = false.obs;
-  
+  final isTermsAccepted = false.obs;
+  // final RxBool isLoading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -25,9 +33,10 @@ class SignupController extends GetxController {
 
   @override
   void onClose() {
-    // Dispose controllers
     fullNameController.dispose();
     emailController.dispose();
+    mobileNumberController.dispose();
+    ageController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
     super.onClose();
@@ -37,131 +46,129 @@ class SignupController extends GetxController {
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
-  
+
   // Toggle confirm password visibility
   void toggleConfirmPasswordVisibility() {
     isConfirmPasswordHidden.value = !isConfirmPasswordHidden.value;
   }
-  
+
+  void toggleTermsAcceptance() {
+    isTermsAccepted.value = !isTermsAccepted.value;
+  }
+
   // Validate form
   bool validateForm() {
     if (fullNameController.text.trim().isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Please enter your full name',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      DialogHelper.showError('Please enter your full name');
       return false;
     }
-    
+
     if (emailController.text.trim().isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Please enter your email',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      DialogHelper.showError('Please enter your email');
       return false;
     }
-    
+
     if (!GetUtils.isEmail(emailController.text.trim())) {
-      Get.snackbar(
-        'Error',
-        'Please enter a valid email',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      DialogHelper.showError('Please enter a valid email');
       return false;
     }
-    
+
+    if (mobileNumberController.text.trim().isEmpty) {
+      DialogHelper.showError('Please enter your mobile number');
+      return false;
+    }
+
+    if (ageController.text.trim().isEmpty) {
+      DialogHelper.showError('Please enter your age');
+      return false;
+    }
+
     if (passwordController.text.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Please enter a password',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      DialogHelper.showError('Please enter a password');
       return false;
     }
-    
+
     if (passwordController.text.length < 6) {
-      Get.snackbar(
-        'Error',
-        'Password must be at least 6 characters',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      DialogHelper.showError('Password must be at least 6 characters');
       return false;
     }
-    
+
     if (confirmPasswordController.text.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Please confirm your password',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      DialogHelper.showError('Please confirm your password');
       return false;
     }
-    
+
     if (passwordController.text != confirmPasswordController.text) {
-      Get.snackbar(
-        'Error',
-        'Passwords do not match',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      DialogHelper.showError('Passwords do not match');
       return false;
     }
-    
+
+    if (mobileNumberController.text.trim().length != 10) {
+      DialogHelper.showError('Mobile number must be 10 digits long');
+      return false;
+    }
+
+    // Validate age (between 13 and 120)
+    int? age = int.tryParse(ageController.text.trim());
+    if (age == null || age < 13 || age > 120) {
+      DialogHelper.showError('Please enter a valid age between 13 and 120');
+      return false;
+    }
+
+    if (!isTermsAccepted.value) {
+      DialogHelper.showError('Please accept the terms and conditions');
+      return false;
+    }
+
     return true;
   }
-  
-  // Sign up function
+
   Future<void> signUp() async {
     if (!validateForm()) return;
-    
+
     try {
-      isLoading.value = true;
-      
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 2));
-      
-      // TODO: Implement your signup logic here
-      // Example: await AuthService.signUp(
-      //   name: fullNameController.text.trim(),
-      //   email: emailController.text.trim(),
-      //   password: passwordController.text,
-      // );
-      
-      Get.snackbar(
-        'Success',
-        'Account created successfully!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
+      // isLoading.value = true;
+      LoaderView.customLogoLoader();
+
+      final email = emailController.text.trim();
+
+      final response = await CallHelper().post(
+        '/auth/request-signup-otp',
+        data: {'email': email},
       );
-      
-      // Navigate to dashboard or login
-      // Get.offAllNamed('/dashboard');
-      
+
+      LoaderView.hideLoading();
+
+      if (response != null && response['success'] != false) {
+        DialogHelper.showSuccess('OTP sent to your email!');
+        Get.toNamed(Routes.VERIFY_OTP, arguments: {
+          'emailId': emailController.text.trim(),
+          'name': fullNameController.text.trim(),
+          'password': passwordController.text,
+          'mobile': mobileNumberController.text.trim(),
+          'age': ageController.text.trim(),
+        });
+      } else {
+        DialogHelper.showError(response['message'] ?? 'Something went wrong');
+      }
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Failed to create account. Please try again.',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      DialogHelper.showError('Failed to create account. Please try again.');
     } finally {
-      isLoading.value = false;
+      // isLoading.value = false;
+      LoaderView.hideLoading();
     }
   }
-  
+
   // Clear form
   void clearForm() {
     fullNameController.clear();
     emailController.clear();
+    mobileNumberController.clear();
+    ageController.clear();
     passwordController.clear();
     confirmPasswordController.clear();
+    isPasswordHidden.value = true;
+    isConfirmPasswordHidden.value = true;
+    isTermsAccepted.value = false;
   }
 }

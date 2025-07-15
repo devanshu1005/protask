@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:protask1/app/themes/app_colors.dart';
 import 'package:protask1/app/themes/app_fonts.dart';
+import 'package:protask1/app/utils/widgets/common_input_field.dart';
 import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
   const SignupView({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +25,12 @@ class SignupView extends GetView<SignupController> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 32),
-              
-              // Title
               Text(
                 'Create\nAccount',
                 style: AppFonts.heading1.copyWith(
@@ -38,265 +38,134 @@ class SignupView extends GetView<SignupController> {
                   height: 1.1,
                 ),
               ),
-              
               const SizedBox(height: 8),
-              
-              // Subtitle
               Text(
                 'Join ProTask today',
                 style: AppFonts.bodyMedium.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
-              
               const SizedBox(height: 48),
-              
-              // Full Name Field
-              Text(
-                'Full Name',
-                style: AppFonts.formLabel.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-              ),
+              Text('Full Name', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
-              TextField(
+              CommonInputField(
+                icon: Icons.person_outline,
+                hintText: 'Enter your full name',
                 controller: controller.fullNameController,
-                style: AppFonts.formField.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Enter your full name',
-                  hintStyle: AppFonts.formField.copyWith(
-                    color: AppColors.textMuted,
-                  ),
-                  filled: true,
-                  fillColor: AppColors.surface,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.border,
-                      width: 1,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.border,
-                      width: 1,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.borderFocus,
-                      width: 2,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                ),
               ),
-              
               const SizedBox(height: 24),
-              
-              // Email Field
-              Text(
-                'Email',
-                style: AppFonts.formLabel.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-              ),
+              Text('Email', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
-              TextField(
+              CommonInputField(
+                icon: Icons.email_outlined,
+                hintText: 'Enter your email',
                 controller: controller.emailController,
-                style: AppFonts.formField.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Enter your email',
-                  hintStyle: AppFonts.formField.copyWith(
-                    color: AppColors.textMuted,
-                  ),
-                  filled: true,
-                  fillColor: AppColors.surface,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.border,
-                      width: 1,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.border,
-                      width: 1,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.borderFocus,
-                      width: 2,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                ),
+                keyboardType: TextInputType.emailAddress,
               ),
-              
               const SizedBox(height: 24),
-              
-              // Password Field
-              Text(
-                'Password',
-                style: AppFonts.formLabel.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-              ),
+              Text('Mobile Number', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
-              Obx(() => TextField(
+              CommonInputField(
+                icon: Icons.phone_outlined,
+                hintText: 'Enter your mobile number',
+                controller: controller.mobileNumberController,
+                keyboardType: TextInputType.phone,
+              ),
+              const SizedBox(height: 24),
+              Text('Age', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
+              const SizedBox(height: 8),
+              CommonInputField(
+                icon: Icons.cake_outlined,
+                hintText: 'Enter your age',
+                controller: controller.ageController,
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 24),
+              Text('Password', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
+              const SizedBox(height: 8),
+              CommonInputField(
+                icon: Icons.lock_outline,
+                hintText: 'Create a password',
                 controller: controller.passwordController,
-                obscureText: controller.isPasswordHidden.value,
-                style: AppFonts.formField.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Create a password',
-                  hintStyle: AppFonts.formField.copyWith(
-                    color: AppColors.textMuted,
-                  ),
-                  filled: true,
-                  fillColor: AppColors.surface,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.border,
-                      width: 1,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.border,
-                      width: 1,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.borderFocus,
-                      width: 2,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isPasswordHidden.value
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: AppColors.textMuted,
-                    ),
-                    onPressed: controller.togglePasswordVisibility,
-                  ),
-                ),
-              )),
-              
-              const SizedBox(height: 24),
-              
-              // Confirm Password Field
-              Text(
-                'Confirm Password',
-                style: AppFonts.formLabel.copyWith(
-                  color: AppColors.textPrimary,
-                ),
+                isPassword: true,
+                isVisibleObs: controller.isPasswordHidden,
               ),
+              const SizedBox(height: 24),
+              Text('Confirm Password', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
-              Obx(() => TextField(
+              CommonInputField(
+                icon: Icons.lock_outline,
+                hintText: 'Confirm your password',
                 controller: controller.confirmPasswordController,
-                obscureText: controller.isConfirmPasswordHidden.value,
-                style: AppFonts.formField.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Confirm your password',
-                  hintStyle: AppFonts.formField.copyWith(
-                    color: AppColors.textMuted,
-                  ),
-                  filled: true,
-                  fillColor: AppColors.surface,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.border,
-                      width: 1,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.border,
-                      width: 1,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: AppColors.borderFocus,
-                      width: 2,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      controller.isConfirmPasswordHidden.value
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: AppColors.textMuted,
-                    ),
-                    onPressed: controller.toggleConfirmPasswordVisibility,
-                  ),
-                ),
-              )),
-              
-              const Spacer(),
-              
-              // Sign Up Button
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: controller.signUp,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.textWhite,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    'Sign Up',
-                    style: AppFonts.button.copyWith(
-                      color: AppColors.textWhite,
-                    ),
-                  ),
-                ),
+                isPassword: true,
+                isVisibleObs: controller.isConfirmPasswordHidden,
               ),
-              
+              const SizedBox(height: 32),
+              Obx(() => Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                        value: controller.isTermsAccepted.value,
+                        onChanged: (value) => controller.toggleTermsAcceptance(),
+                        activeColor: AppColors.primary,
+                        checkColor: AppColors.white,
+                        side: BorderSide(color: AppColors.border, width: 1),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            style: AppFonts.bodySmall.copyWith(color: AppColors.textSecondary),
+                            children: [
+                              const TextSpan(text: 'By creating an account, you agree to our '),
+                              TextSpan(
+                                text: 'Terms of Service',
+                                style: AppFonts.bodySmall.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: AppFonts.semiBold,
+                                ),
+                              ),
+                              const TextSpan(text: ' and '),
+                              TextSpan(
+                                text: 'Privacy Policy',
+                                style: AppFonts.bodySmall.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: AppFonts.semiBold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+              const SizedBox(height: 32),
+              Obx(() => SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: controller.isTermsAccepted.value 
+                          ? controller.signUp
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: controller.isTermsAccepted.value
+                            ? AppColors.primary
+                            : AppColors.textDisabled,
+                        foregroundColor: AppColors.textWhite,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                              'Sign Up',
+                              style: AppFonts.button.copyWith(
+                                color: AppColors.textWhite,
+                              ),
+                            ),
+                    ),
+                  )),
               const SizedBox(height: 24),
-              
-              // Already have account
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -318,7 +187,6 @@ class SignupView extends GetView<SignupController> {
                   ),
                 ],
               ),
-              
               const SizedBox(height: 32),
             ],
           ),
