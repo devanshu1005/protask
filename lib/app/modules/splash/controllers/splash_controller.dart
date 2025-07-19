@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:protask1/app/routes/app_pages.dart';
+import 'package:protask1/app/utils/app_globals.dart';
 
 class SplashController extends GetxController {
   final currentDotIndex = 0.obs;
@@ -35,21 +36,20 @@ class SplashController extends GetxController {
 
   void _startNavigationTimer() {
     _navigationTimer = Timer(const Duration(seconds: 5), () {
-      // Navigate to next screen (replace with your actual route)
-      // Get.offNamed('/home');
-      // or
-      // Get.offAllNamed('/login');
-      
-      // For demo purposes, just restart the animation
-      Get.offAllNamed(Routes.LOGIN);
-      // _restartAnimation();
+      // print(
+      //     'Access token on splash screen: ${AppGlobals.instance.accessToken}');
+      if (AppGlobals.instance.accessToken != null) {
+        Get.offAllNamed(Routes.HOME);
+      } else {
+        Get.offAllNamed(Routes.LOGIN);
+      }
     });
   }
 
-  void _restartAnimation() {
-    currentDotIndex.value = 0;
-    _timer?.cancel();
-    _startDotAnimation();
-    _startNavigationTimer();
-  }
+  // void _restartAnimation() {
+  //   currentDotIndex.value = 0;
+  //   _timer?.cancel();
+  //   _startDotAnimation();
+  //   _startNavigationTimer();
+  // }
 }

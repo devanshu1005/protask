@@ -1,74 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:protask1/app/services/call_helper.dart';
+import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
+import 'package:protask1/app/utils/widgets/loader_view.dart';
 
 class AddEditTaskController extends GetxController {
-  // Text controllers for form fields
   late final TextEditingController titleController;
   late final TextEditingController descriptionController;
-  
-  // Observable for selected priority
+
   final selectedPriority = 'medium'.obs;
-  
+  final Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
+
   @override
   void onInit() {
     super.onInit();
     titleController = TextEditingController();
     descriptionController = TextEditingController();
   }
-  
+
   @override
   void onClose() {
     titleController.dispose();
     descriptionController.dispose();
     super.onClose();
   }
-  
-  /// Set the priority level
+
   void setPriority(String priority) {
     selectedPriority.value = priority;
   }
-  
-  /// Save the task
-  void saveTask() {
-    // Validate title is not empty
+
+  void setDueDate(DateTime? date) {
+    selectedDate.value = date;
+  }
+
+  Future<void> saveTask() async {
     if (titleController.text.trim().isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Please enter a task title',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      DialogHelper.showError('Please enter a task title');
       return;
     }
-    
-    // Create task object (you can customize this based on your data model)
-    final task = {
-      'title': titleController.text.trim(),
-      'description': descriptionController.text.trim(),
-      'priority': selectedPriority.value,
-      'createdAt': DateTime.now().toIso8601String(),
-      'isCompleted': false,
+
+    if (selectedDate.value == null) {
+      DialogHelper.showError('Please select a due date');
+      return;
+    }
+
+    final taskData = {
+      "title": titleController.text.trim(),
+      "description": descriptionController.text.trim(),
+      "priority": selectedPriority.value,
+      "completion": "pending",
+      "dueDate": DateFormat('yyyy-MM-dd').format(selectedDate.value!),
     };
-    
-    // TODO: Add your task saving logic here
-    // For example: await taskService.createTask(task);
-    
-    print('Task saved: $task');
-    
-    // Show success message
-    Get.snackbar(
-      'Success',
-      'Task created successfully',
-      snackPosition: SnackPosition.BOTTOM,
-    );
-    
-    // Navigate back
-    Get.back();
+
+    LoaderView.customLogoLoader();
+
+    try {
+      final response = await CallHelper().post('/task/create', data: taskData);
+
+      if (response != null && response['success'] == true) {
+        Get.back(result: true); // ✅ Return result to caller
+      } else {
+        DialogHelper.showError(response?['message'] ?? 'Failed to create task');
+      }
+    } catch (e) {
+      DialogHelper.showError('Something went wrong. Please try again.');
+    } finally {
+      await LoaderView.hideLoading(); // ✅ Always hide loader
+      Get.back(result: true);
+    }
   }
-  
-  /// Clear all form fields
+
   void clearForm() {
     titleController.clear();
     descriptionController.clear();
     selectedPriority.value = 'medium';
+    selectedDate.value = null;
   }
 }

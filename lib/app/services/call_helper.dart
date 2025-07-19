@@ -204,3 +204,14 @@ class CallHelper {
     };
   }
 }
+
+extension DioPatchExtension on CallHelper {
+  Future<dynamic> patch(String path, {dynamic data}) async {
+    try {
+      final response = await _dio.patch(path, data: data);
+      return response.data;
+    } on DioException catch (e) {
+      return _handleDioError(e);
+    }
+  }
+}

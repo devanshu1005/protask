@@ -16,6 +16,8 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/task_detail_screen/bindings/task_detail_screen_binding.dart';
+import '../modules/task_detail_screen/views/task_detail_screen_view.dart';
 import '../modules/verify_otp/bindings/verify_otp_binding.dart';
 import '../modules/verify_otp/views/verify_otp_view.dart';
 import '../modules/verify_otp_forgot_password/bindings/verify_otp_forgot_password_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.RESET_PASSWORD,
       page: () => const ResetPasswordView(),
       binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.TASK_DETAIL_SCREEN,
+      page: () => const TaskDetailScreenView(),
+      binding: TaskDetailScreenBinding(),
     ),
   ];
 }

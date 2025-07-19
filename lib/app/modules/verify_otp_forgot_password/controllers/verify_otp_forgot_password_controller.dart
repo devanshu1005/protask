@@ -112,7 +112,7 @@ class VerifyOtpForgotPasswordController extends GetxController {
 
       if (response != null && response['success'] == true) {
         DialogHelper.showSuccess('OTP verified successfully!');
-        Get.toNamed(Routes.RESET_PASSWORD, arguments: {'emailId': emailId});
+        Get.offAndToNamed(Routes.RESET_PASSWORD, arguments: {'emailId': emailId});
       } else {
         _clearOtpFields();
         DialogHelper.showError(

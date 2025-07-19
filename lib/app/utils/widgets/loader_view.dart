@@ -3,36 +3,41 @@ import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:protask1/app/themes/app_colors.dart';
 
-
 class LoaderView {
   static void customLogoLoader() {
     if (Get.isDialogOpen == false) {
-      Get.dialog(Dialog(
-        backgroundColor: Colors.transparent,
-        child: Container(
-          width: Get.context!.width * 0.18,
-          height: Get.context!.width * 0.18,
-          decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: const [
-                BoxShadow(color: Colors.white, blurRadius: 0.15)
-              ]),
-          child:  SpinKitCircle(
-            color: AppColors.primary,
+      Get.dialog(
+        WillPopScope(
+          onWillPop: () async => false,
+          child: Dialog(
+            backgroundColor: Colors.transparent,
+            child: Container(
+              width: Get.context!.width * 0.18,
+              height: Get.context!.width * 0.18,
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: const [
+                  BoxShadow(color: Colors.white, blurRadius: 0.15)
+                ],
+              ),
+              child: SpinKitCircle(color: AppColors.primary),
+            ).marginSymmetric(horizontal: Get.context!.width * 0.25),
           ),
-        ).marginSymmetric(horizontal: Get.context!.width * 0.25),
-      ));
+        ),
+        barrierDismissible: false,
+      );
     }
   }
 
-  // Hide loading
-  static void hideLoading() {
-    if (Get.isDialogOpen!) {
-      Get.back(result: false);
+  static Future<void> hideLoading() async {
+    if (Get.isDialogOpen == true) {
+      Get.back(closeOverlays: true);
+      await Future.delayed(const Duration(milliseconds: 100));
     }
   }
 }
+
 
 class _LogoLoaderDialog extends StatefulWidget {
   @override
@@ -54,6 +59,7 @@ class __LogoLoaderDialogState extends State<_LogoLoaderDialog>
 
     _animation = Tween<double>(begin: 0.8, end: 1.2).animate(_controller);
   }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -70,9 +76,7 @@ class __LogoLoaderDialogState extends State<_LogoLoaderDialog>
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
-            BoxShadow(color: Colors.white, blurRadius: 0.15)
-          ],
+          boxShadow: const [BoxShadow(color: Colors.white, blurRadius: 0.15)],
         ),
         child: Stack(
           alignment: Alignment.center,
