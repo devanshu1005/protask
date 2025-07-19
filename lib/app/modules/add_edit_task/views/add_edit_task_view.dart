@@ -19,7 +19,9 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          'New Task',
+          controller.isEdit
+              ? controller.task?.title ?? 'Edit Task'
+              : 'New Task',
           style: AppFonts.appBarTitle.copyWith(color: AppColors.textWhite),
         ),
         centerTitle: false,
@@ -65,7 +67,7 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                             .copyWith(color: AppColors.textPrimary),
                       ),
                       const SizedBox(height: 20),
-        
+
                       // Title Field
                       Text(
                         'Title',
@@ -85,11 +87,13 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                           fillColor: AppColors.backgroundSecondary,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.border),
+                            borderSide:
+                                const BorderSide(color: AppColors.border),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.border),
+                            borderSide:
+                                const BorderSide(color: AppColors.border),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -103,7 +107,7 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                         ),
                       ),
                       const SizedBox(height: 16),
-        
+
                       // Description Field
                       Text(
                         'Description',
@@ -124,11 +128,13 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                           fillColor: AppColors.backgroundSecondary,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.border),
+                            borderSide:
+                                const BorderSide(color: AppColors.border),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.border),
+                            borderSide:
+                                const BorderSide(color: AppColors.border),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -144,9 +150,9 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                     ],
                   ),
                 ),
-        
+
                 const SizedBox(height: 16),
-        
+
                 // Due Date Section
                 Container(
                   width: double.infinity,
@@ -176,7 +182,7 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                         final displayText = selected != null
                             ? '${selected.day}/${selected.month}/${selected.year}'
                             : 'Select due date';
-        
+
                         return GestureDetector(
                           onTap: () async {
                             final pickedDate = await showDatePicker(
@@ -220,9 +226,9 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                     ],
                   ),
                 ),
-        
+
                 const SizedBox(height: 16),
-        
+
                 // Priority Section
                 Container(
                   width: double.infinity,
@@ -247,7 +253,7 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                             .copyWith(color: AppColors.textPrimary),
                       ),
                       const SizedBox(height: 16),
-        
+
                       // Priority Buttons
                       Obx(() => Row(
                             children: [

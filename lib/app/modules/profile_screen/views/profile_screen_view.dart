@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:protask1/app/routes/app_pages.dart';
 import 'package:protask1/app/utils/app_globals.dart';
 import '../controllers/profile_screen_controller.dart';
 
@@ -37,33 +38,38 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: const Center(
-                        child: Text(
-                          'JD',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF4F46E5),
-                            fontFamily: 'Inter',
+                      child: Obx(
+                        () => Center(
+                          child: Text(
+                            controller
+                                .getInitials(AppGlobals.instance.name.value),
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF4F46E5),
+                              fontFamily: 'Inter',
+                            ),
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
                     // Name
-                    const Text(
-                      'John Doe',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontFamily: 'Inter',
+                    Obx(
+                      () => Text(
+                        AppGlobals.instance.name.value ?? 'User',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          fontFamily: 'Inter',
+                        ),
                       ),
                     ),
                     const SizedBox(height: 4),
                     // Email
-                    const Text(
-                      'john@example.com',
+                    Text(
+                      AppGlobals.instance.email.value ?? 'Email not available',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -89,7 +95,7 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                     iconColor: const Color(0xFF3B82F6), // AppColors.info
                     title: 'Edit Profile',
                     onTap: () {
-                      // Handle edit profile
+                      Get.toNamed(Routes.EDIT_PROFILE);
                     },
                   ),
                   _buildMenuItem(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:protask1/app/models/task.dart';
+import 'package:protask1/app/routes/app_pages.dart';
 import 'package:protask1/app/services/call_helper.dart';
 import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
 import 'package:protask1/app/utils/widgets/loader_view.dart';
@@ -12,11 +14,30 @@ class AddEditTaskController extends GetxController {
   final selectedPriority = 'medium'.obs;
   final Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
 
+  TaskModel? task;
+  bool isEdit = false;
+
   @override
   void onInit() {
     super.onInit();
+
+    // Initialize controllers
     titleController = TextEditingController();
     descriptionController = TextEditingController();
+
+    // Read arguments if passed
+    if (Get.arguments != null && Get.arguments is Map) {
+      final args = Get.arguments as Map;
+      task = args['task'] as TaskModel?;
+      isEdit = args['isEdit'] ?? false;
+
+      if (task != null) {
+        titleController.text = task!.title;
+        descriptionController.text = task!.description ?? '';
+        selectedPriority.value = task!.priority.toLowerCase();
+        selectedDate.value = task!.dueDate;
+      }
+    }
   }
 
   @override
@@ -49,25 +70,31 @@ class AddEditTaskController extends GetxController {
       "title": titleController.text.trim(),
       "description": descriptionController.text.trim(),
       "priority": selectedPriority.value,
-      "completion": "pending",
+      "completion": task?.isCompleted == true ? "completed" : "pending",
       "dueDate": DateFormat('yyyy-MM-dd').format(selectedDate.value!),
     };
 
     LoaderView.customLogoLoader();
 
     try {
-      final response = await CallHelper().post('/task/create', data: taskData);
+      final response = isEdit
+          ? await CallHelper().patch('/task/update/${task!.id}', data: taskData)
+          : await CallHelper().post('/task/create', data: taskData);
 
       if (response != null && response['success'] == true) {
-        Get.back(result: true); // ✅ Return result to caller
+        Get.back(result: true); // Success result
       } else {
-        DialogHelper.showError(response?['message'] ?? 'Failed to create task');
+        DialogHelper.showError(response?['message'] ?? 'Failed to save task');
       }
     } catch (e) {
       DialogHelper.showError('Something went wrong. Please try again.');
     } finally {
       await LoaderView.hideLoading(); // ✅ Always hide loader
-      Get.back(result: true);
+      if (isEdit) {
+        Get.offAllNamed(Routes.HOME);
+      } else {
+        Get.back(result: true);
+      }
     }
   }
 

@@ -49,12 +49,14 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ),
                             const SizedBox(height: 4),
-                            Text(
-                              AppGlobals.instance.name ?? 'User',
-                              style: AppFonts.heading2.copyWith(
-                                color: AppColors.textWhite,
-                                fontSize: 24,
-                                fontWeight: AppFonts.bold,
+                            Obx(
+                              () => Text(
+                                AppGlobals.instance.name.value ?? 'User',
+                                style: AppFonts.heading2.copyWith(
+                                  color: AppColors.textWhite,
+                                  fontSize: 24,
+                                  fontWeight: AppFonts.bold,
+                                ),
                               ),
                             ),
                           ],
@@ -82,8 +84,9 @@ class HomeView extends GetView<HomeController> {
                                 radius: 24,
                                 backgroundColor: Colors.white24,
                                 child: Text(
-                                  'JD',
-                                  style: TextStyle(
+                                  controller.getInitials(
+                                      AppGlobals.instance.name.value),
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -213,136 +216,192 @@ class HomeView extends GetView<HomeController> {
     final isCompleted = task.isCompleted;
     final priority = task.priority;
 
-    return InkWell(
-      onTap: () {
-        Get.toNamed(Routes.TASK_DETAIL_SCREEN, arguments: task)?.then((result) {
-          if (result == true) {
-            controller.fetchTasks();
-            DialogHelper.showSuccess(
-              'Task has been removed successfully!',
-              title: 'Task Deleted',
-              backgroundColor: Colors.red,
-            );
-          }
-        });
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: AppColors.borderLight,
-            width: 1,
-          ),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.borderLight,
+          width: 1,
         ),
-        child: Row(
-          children: [
-            // Checkbox
-            GestureDetector(
-              onTap: () => controller.toggleTask(task.id),
-              child: Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: isCompleted ? AppColors.success : AppColors.surface,
-                  border: Border.all(
-                    color: isCompleted ? AppColors.success : AppColors.border,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadowLight,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          // Checkbox
+          GestureDetector(
+            onTap: () => controller.toggleTask(task.id),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                color: isCompleted ? AppColors.success : AppColors.surface,
+                border: Border.all(
+                  color: isCompleted ? AppColors.success : AppColors.border,
+                  width: 2,
                 ),
-                child: isCompleted
-                    ? const Icon(
-                        Icons.check,
-                        color: AppColors.textWhite,
-                        size: 16,
-                      )
-                    : null,
+                borderRadius: BorderRadius.circular(12),
               ),
+              child: isCompleted
+                  ? const Icon(
+                      Icons.check,
+                      color: AppColors.textWhite,
+                      size: 16,
+                    )
+                  : null,
             ),
+          ),
 
-            const SizedBox(width: 16),
+          const SizedBox(width: 16),
 
-            // Task Content
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Task Title
-                  Text(
-                    task.title,
-                    style: AppFonts.bodyMedium.copyWith(
-                      color: isCompleted
-                          ? AppColors.textMuted
-                          : AppColors.textPrimary,
-                      decoration: isCompleted
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
-                      fontWeight: AppFonts.medium,
+          // Task Content
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Task Title
+                Text(
+                  task.title,
+                  style: AppFonts.bodyMedium.copyWith(
+                    color: isCompleted
+                        ? AppColors.textMuted
+                        : AppColors.textPrimary,
+                    decoration: isCompleted
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                    fontWeight: AppFonts.medium,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                const SizedBox(height: 8),
+
+                // Priority and Due Date
+                Row(
+                  children: [
+                    // Priority Badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppColors.getPriorityBackgroundColor(priority),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        priority,
+                        style: AppFonts.labelSmall.copyWith(
+                          color: AppColors.getPriorityColor(priority),
+                          fontSize: 12,
+                          fontWeight: AppFonts.medium,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(width: 12),
+
+                    // Due Date with Icon
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.access_time,
+                            size: 12,
+                            color: AppColors.textSecondary,
+                          ),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              'Due: ${task.dueDateLabel}',
+                              style: AppFonts.bodySmall.copyWith(
+                                color: AppColors.textSecondary,
+                                fontSize: 12,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(width: 12),
+
+          // Action Buttons
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Edit Icon
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.TASK_DETAIL_SCREEN, arguments: task)
+                      ?.then((result) {
+                    if (result == true) {
+                      controller.fetchTasks();
+                      DialogHelper.showSuccess(
+                        'Task has been removed successfully!',
+                        title: 'Task Deleted',
+                        backgroundColor: Colors.red,
+                      );
+                    }
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.info.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: AppColors.info.withOpacity(0.2),
+                      width: 1,
                     ),
                   ),
-
-                  const SizedBox(height: 8),
-
-                  // Priority and Due Date
-                  Row(
-                    children: [
-                      // Priority Badge
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: AppColors.getPriorityBackgroundColor(priority),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          priority,
-                          style: AppFonts.labelSmall.copyWith(
-                            color: AppColors.getPriorityColor(priority),
-                            fontSize: 12,
-                            fontWeight: AppFonts.medium,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 16),
-
-                      // Due Date
-                      Text(
-                        'Due: ${task.dueDateLabel}',
-                        style: AppFonts.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                  child: Icon(
+                    Icons.edit_outlined,
+                    color: AppColors.info,
+                    size: 18,
                   ),
-                ],
-              ),
-            ),
-
-            const SizedBox(width: 16),
-
-            // Delete Icon
-            GestureDetector(
-              onTap: () => controller.deleteTask(task.id, task.title),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.delete_outline,
-                  color: Colors.red,
-                  size: 20,
                 ),
               ),
-            ),
-          ],
-        ),
+
+              const SizedBox(width: 8),
+
+              // Delete Icon
+              GestureDetector(
+                onTap: () => controller.deleteTask(task.id, task.title),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: AppColors.error.withOpacity(0.2),
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: AppColors.error,
+                    size: 18,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

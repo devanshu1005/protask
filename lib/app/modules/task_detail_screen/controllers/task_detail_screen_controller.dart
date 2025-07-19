@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:protask1/app/models/task.dart';
+import 'package:protask1/app/routes/app_pages.dart';
 import 'package:protask1/app/services/call_helper.dart';
 import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
 import 'package:protask1/app/utils/widgets/loader_view.dart';
@@ -41,7 +42,12 @@ class TaskDetailScreenController extends GetxController {
   }
 
   void editTask() {
-    // Navigate to edit screen or implement edit logic
-    print('Editing task: ${task.id}');
+    Get.toNamed(
+      Routes.ADD_EDIT_TASK,
+      arguments: {
+        'task': task,
+        'isEdit': true,
+      },
+    );
   }
 }

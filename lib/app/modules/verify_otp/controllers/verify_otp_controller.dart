@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:protask1/app/modules/login/controllers/login_controller.dart';
 import 'package:protask1/app/routes/app_pages.dart';
 import 'package:protask1/app/services/call_helper.dart';
 import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
@@ -134,7 +135,6 @@ class VerifyOtpController extends GetxController {
 
   Future<void> createUser() async {
     try {
-      // isLoading.value = true;
       LoaderView.customLogoLoader();
 
       final response = await CallHelper().post(
@@ -148,21 +148,55 @@ class VerifyOtpController extends GetxController {
         },
       );
 
-      LoaderView.hideLoading();
+      // if (response != null && response['success'] == true) {
+      //   DialogHelper.showSuccess(
+      //     'Account created successfully!',
+      //     title: 'Welcome',
+      //     backgroundColor: Colors.green,
+      //   );
+
+      //   // 🧹 Clean up controllers before navigating
+      //   if (Get.isRegistered<LoginController>()) {
+      //     Get.delete<LoginController>(force: true);
+      //   }
+
+      //   if (Get.isRegistered<SignupController>()) {
+      //     Get.delete<SignupController>(force: true);
+      //   }
+
+      //   if (Get.isRegistered<VerifyOtpController>()) {
+      //     Get.delete<VerifyOtpController>(force: true);
+      //   }
+
+      //   await Future.delayed(const Duration(milliseconds: 300));
+
+      //   // ✅ Safe navigation: Widget + Binding
+      //   Get.offAll(() => LoginView(), binding: LoginBinding());
+      // }
 
       if (response != null && response['success'] == true) {
-        Get.offAndToNamed(Routes.LOGIN);
+        DialogHelper.showSuccess(
+          'Account created successfully!',
+          title: 'Welcome',
+          backgroundColor: Colors.green,
+        );
 
-        // await Future.delayed(const Duration(seconds: 1));
-        // Get.offAllNamed(Routes.HOME); // Replace as needed
+        // // Clean up stale controller just in case
+        // if (Get.isRegistered<LoginController>()) {
+        //   Get.delete<LoginController>();
+        // }
+
+        await Future.delayed(const Duration(milliseconds: 300));
+        Get.offAllNamed(Routes.LOGIN);
       } else {
         DialogHelper.showError(
-            response['message'] ?? 'Account creation failed.');
+          response?['message'] ?? 'Account creation failed.',
+        );
       }
     } catch (e) {
       DialogHelper.showError('Something went wrong. Please try again.');
     } finally {
-      LoaderView.hideLoading();
+      await LoaderView.hideLoading();
     }
   }
 

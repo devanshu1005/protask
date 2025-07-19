@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/add_edit_task/bindings/add_edit_task_binding.dart';
 import '../modules/add_edit_task/views/add_edit_task_view.dart';
+import '../modules/edit_profile/bindings/edit_profile_binding.dart';
+import '../modules/edit_profile/views/edit_profile_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -85,6 +87,11 @@ class AppPages {
       name: _Paths.TASK_DETAIL_SCREEN,
       page: () => const TaskDetailScreenView(),
       binding: TaskDetailScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PROFILE,
+      page: () => const EditProfileView(),
+      binding: EditProfileBinding(),
     ),
   ];
 }

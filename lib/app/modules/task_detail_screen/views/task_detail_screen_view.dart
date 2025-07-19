@@ -351,7 +351,7 @@ class TaskDetailScreenView extends GetView<TaskDetailScreenController> {
           height: 54,
           child: ElevatedButton.icon(
             onPressed: () {
-              // Handle edit task
+             controller.editTask();
             },
             icon: const Icon(
               Icons.edit_outlined,

@@ -16,6 +16,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
+    emailController.text = '';
+    passwordController.text = '';
     super.onInit();
   }
 
@@ -26,8 +28,8 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
+    // emailController.dispose();
+    // passwordController.dispose();
     super.onClose();
   }
 
@@ -64,8 +66,10 @@ class LoginController extends GetxController {
 
         AppGlobals.instance.accessToken = token;
         AppGlobals.instance.userId = user['_id'];
-        AppGlobals.instance.name = user['name'];
-        AppGlobals.instance.email = user['email'];
+        AppGlobals.instance.name.value = user['name'];
+        AppGlobals.instance.email.value = user['email'];
+        AppGlobals.instance.age.value = user['age'];
+        AppGlobals.instance.mobile.value = user['mobileNumber'];
 
         await AppGlobals.instance.saveToStorage();
 
