@@ -16,14 +16,18 @@ class SignupController extends GetxController {
   final TextEditingController ageController = TextEditingController();
 
   // Observable variables
-  final RxBool isPasswordHidden = true.obs;
-  final RxBool isConfirmPasswordHidden = true.obs;
+  final RxBool isPasswordHidden = false.obs;
+  final RxBool isConfirmPasswordHidden = false.obs;
   final isTermsAccepted = false.obs;
   // final RxBool isLoading = false.obs;
+  final mobileCharCount = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
+    mobileNumberController.addListener(() {
+      mobileCharCount.value = mobileNumberController.text.length;
+    });
   }
 
   @override

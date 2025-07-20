@@ -92,7 +92,7 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                 children: [
                   const TextSpan(text: 'Enter the 6-digit code sent to\n'),
                   TextSpan(
-                    text: controller.mobile,
+                    text: controller.emailId,
                     style: AppFonts.bodyMedium.copyWith(
                       color: AppColors.primary,
                       fontWeight: AppFonts.semiBold,

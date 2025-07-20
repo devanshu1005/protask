@@ -38,44 +38,45 @@ class HomeView extends GetView<HomeController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Greeting
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Good morning,',
-                              style: AppFonts.bodyLarge.copyWith(
-                                color: AppColors.textWhite.withOpacity(0.9),
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Obx(
-                              () => Text(
-                                AppGlobals.instance.name.value ?? 'User',
-                                style: AppFonts.heading2.copyWith(
-                                  color: AppColors.textWhite,
-                                  fontSize: 24,
-                                  fontWeight: AppFonts.bold,
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Welcome,',
+                                style: AppFonts.bodyLarge.copyWith(
+                                  color: AppColors.textWhite.withOpacity(0.9),
+                                  fontSize: 16,
                                 ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 4),
+                              Obx(
+                                () => Text(
+                                  AppGlobals.instance.name.value ?? 'User',
+                                  style: AppFonts.heading2.copyWith(
+                                    color: AppColors.textWhite,
+                                    fontSize: 24,
+                                    fontWeight: AppFonts.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
 
-                        // Profile Avatar
+                        // Profile Avatar & Refresh
                         Row(
                           children: [
-                            // Reload Button
                             IconButton(
                               icon: const Icon(Icons.refresh,
                                   color: Colors.white),
                               onPressed: () {
-                                controller.fetchTasks(); // Manual refresh
+                                controller.fetchTasks();
                               },
                             ),
                             const SizedBox(width: 4),
-
-                            // Profile Avatar
                             GestureDetector(
                               onTap: () {
                                 Get.toNamed(Routes.PROFILE_SCREEN);
@@ -370,7 +371,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                   child: Icon(
-                    Icons.edit_outlined,
+                    Icons.visibility,
                     color: AppColors.info,
                     size: 18,
                   ),

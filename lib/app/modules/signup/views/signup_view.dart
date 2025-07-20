@@ -46,7 +46,9 @@ class SignupView extends GetView<SignupController> {
                 ),
               ),
               const SizedBox(height: 48),
-              Text('Full Name', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
+              Text('Full Name',
+                  style: AppFonts.formLabel
+                      .copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
               CommonInputField(
                 icon: Icons.person_outline,
@@ -54,7 +56,9 @@ class SignupView extends GetView<SignupController> {
                 controller: controller.fullNameController,
               ),
               const SizedBox(height: 24),
-              Text('Email', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
+              Text('Email',
+                  style: AppFonts.formLabel
+                      .copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
               CommonInputField(
                 icon: Icons.email_outlined,
@@ -63,16 +67,28 @@ class SignupView extends GetView<SignupController> {
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 24),
-              Text('Mobile Number', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
+              Text('Mobile Number',
+                  style: AppFonts.formLabel
+                      .copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
-              CommonInputField(
-                icon: Icons.phone_outlined,
-                hintText: 'Enter your mobile number',
-                controller: controller.mobileNumberController,
-                keyboardType: TextInputType.phone,
-              ),
+              Obx(() => CommonInputField(
+                    icon: Icons.phone_outlined,
+                    hintText: 'Enter your mobile number',
+                    controller: controller.mobileNumberController,
+                    keyboardType: TextInputType.phone,
+                    suffixBuilder: Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Text(
+                        '${controller.mobileCharCount.value}/10',
+                        style:
+                            const TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ),
+                  )),
               const SizedBox(height: 24),
-              Text('Age', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
+              Text('Age',
+                  style: AppFonts.formLabel
+                      .copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
               CommonInputField(
                 icon: Icons.cake_outlined,
@@ -81,7 +97,9 @@ class SignupView extends GetView<SignupController> {
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 24),
-              Text('Password', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
+              Text('Password',
+                  style: AppFonts.formLabel
+                      .copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
               CommonInputField(
                 icon: Icons.lock_outline,
@@ -91,7 +109,9 @@ class SignupView extends GetView<SignupController> {
                 isVisibleObs: controller.isPasswordHidden,
               ),
               const SizedBox(height: 24),
-              Text('Confirm Password', style: AppFonts.formLabel.copyWith(color: AppColors.textPrimary)),
+              Text('Confirm Password',
+                  style: AppFonts.formLabel
+                      .copyWith(color: AppColors.textPrimary)),
               const SizedBox(height: 8),
               CommonInputField(
                 icon: Icons.lock_outline,
@@ -106,7 +126,8 @@ class SignupView extends GetView<SignupController> {
                     children: [
                       Checkbox(
                         value: controller.isTermsAccepted.value,
-                        onChanged: (value) => controller.toggleTermsAcceptance(),
+                        onChanged: (value) =>
+                            controller.toggleTermsAcceptance(),
                         activeColor: AppColors.primary,
                         checkColor: AppColors.white,
                         side: BorderSide(color: AppColors.border, width: 1),
@@ -115,9 +136,12 @@ class SignupView extends GetView<SignupController> {
                       Expanded(
                         child: RichText(
                           text: TextSpan(
-                            style: AppFonts.bodySmall.copyWith(color: AppColors.textSecondary),
+                            style: AppFonts.bodySmall
+                                .copyWith(color: AppColors.textSecondary),
                             children: [
-                              const TextSpan(text: 'By creating an account, you agree to our '),
+                              const TextSpan(
+                                  text:
+                                      'By creating an account, you agree to our '),
                               TextSpan(
                                 text: 'Terms of Service',
                                 style: AppFonts.bodySmall.copyWith(
@@ -144,7 +168,7 @@ class SignupView extends GetView<SignupController> {
                     width: double.infinity,
                     height: 56,
                     child: ElevatedButton(
-                      onPressed: controller.isTermsAccepted.value 
+                      onPressed: controller.isTermsAccepted.value
                           ? controller.signUp
                           : null,
                       style: ElevatedButton.styleFrom(
@@ -158,11 +182,11 @@ class SignupView extends GetView<SignupController> {
                         ),
                       ),
                       child: Text(
-                              'Sign Up',
-                              style: AppFonts.button.copyWith(
-                                color: AppColors.textWhite,
-                              ),
-                            ),
+                        'Sign Up',
+                        style: AppFonts.button.copyWith(
+                          color: AppColors.textWhite,
+                        ),
+                      ),
                     ),
                   )),
               const SizedBox(height: 24),

@@ -11,6 +11,7 @@ class CommonInputField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final RxBool? isVisibleObs;
+  final Widget? suffixBuilder; // 👈 NEW
 
   const CommonInputField({
     super.key,
@@ -22,6 +23,7 @@ class CommonInputField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.isVisibleObs,
+    this.suffixBuilder, // 👈 NEW
   });
 
   @override
@@ -54,20 +56,21 @@ class CommonInputField extends StatelessWidget {
             color: Colors.grey,
             size: 20,
           ),
-          suffixIcon: isPassword && isVisibleObs != null
-              ? IconButton(
-                  icon: Icon(
-                    obscure
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: Colors.grey,
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    isVisibleObs!.value = !isVisibleObs!.value;
-                  },
-                )
-              : null,
+          suffixIcon: suffixBuilder ??
+              (isPassword && isVisibleObs != null
+                  ? IconButton(
+                      icon: Icon(
+                        obscure
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: Colors.grey,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        isVisibleObs!.value = !isVisibleObs!.value;
+                      },
+                    )
+                  : null),
           enabledBorder: inputBorder,
           focusedBorder: inputBorder,
           border: inputBorder,
@@ -86,3 +89,4 @@ class CommonInputField extends StatelessWidget {
     }
   }
 }
+
