@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:protask1/app/routes/app_pages.dart';
+import 'package:protask1/app/services/call_helper.dart';
 import 'package:protask1/app/utils/app_globals.dart';
 
 class SplashController extends GetxController {
@@ -12,6 +13,7 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _pingServer();
     _startDotAnimation();
     _startNavigationTimer();
   }
@@ -32,6 +34,10 @@ class SplashController extends GetxController {
     _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       currentDotIndex.value = (currentDotIndex.value + 1) % 3;
     });
+  }
+
+  void _pingServer() async {
+    await CallHelper().pingServer();
   }
 
   void _startNavigationTimer() {

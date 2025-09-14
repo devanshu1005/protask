@@ -215,3 +215,13 @@ extension DioPatchExtension on CallHelper {
     }
   }
 }
+extension ServerPing on CallHelper {
+  Future<void> pingServer() async {
+    try {
+      await _dio.get('/health'); // Your backend’s health endpoint
+      debugPrint("✅ Server is awake now!");
+    } catch (e) {
+      debugPrint("⚠️ Server wakeup failed: $e");
+    }
+  }
+}

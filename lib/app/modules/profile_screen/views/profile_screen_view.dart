@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:protask1/app/routes/app_pages.dart';
 import 'package:protask1/app/utils/app_globals.dart';
+import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
 import '../controllers/profile_screen_controller.dart';
 
 class ProfileScreenView extends GetView<ProfileScreenController> {
@@ -103,7 +104,8 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                     iconColor: const Color(0xFFD97706), // AppColors.warning
                     title: 'Notifications',
                     onTap: () {
-                      // Handle notifications
+                      DialogHelper.showInfo(
+                          'This feature will be available soon');
                     },
                   ),
                   _buildMenuItem(
@@ -111,7 +113,8 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                     iconColor: const Color(0xFFD97706), // AppColors.warning
                     title: 'Dark Mode',
                     onTap: () {
-                      // Handle dark mode
+                      DialogHelper.showInfo(
+                          'This feature will be available soon');
                     },
                   ),
                   _buildMenuItem(
@@ -120,7 +123,8 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                         const Color(0xFF64748B), // AppColors.textSecondary
                     title: 'Privacy',
                     onTap: () {
-                      // Handle privacy
+                      DialogHelper.showInfo(
+                          'This feature will be available soon');
                     },
                   ),
                   const SizedBox(height: 16),

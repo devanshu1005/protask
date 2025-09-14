@@ -67,36 +67,36 @@ class HomeView extends GetView<HomeController> {
                         ),
 
                         // Profile Avatar & Refresh
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.refresh,
-                                  color: Colors.white),
-                              onPressed: () {
-                                controller.fetchTasks();
-                              },
-                            ),
-                            const SizedBox(width: 4),
-                            GestureDetector(
-                              onTap: () {
-                                Get.toNamed(Routes.PROFILE_SCREEN);
-                              },
-                              child: CircleAvatar(
-                                radius: 24,
-                                backgroundColor: Colors.white24,
-                                child: Text(
-                                  controller.getInitials(
-                                      AppGlobals.instance.name.value),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                        Obx(() => Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.refresh,
+                                      color: Colors.white),
+                                  onPressed: () {
+                                    controller.fetchTasks();
+                                  },
+                                ),
+                                const SizedBox(width: 4),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(Routes.PROFILE_SCREEN);
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 24,
+                                    backgroundColor: Colors.white24,
+                                    child: Text(
+                                      controller.getInitials(
+                                          AppGlobals.instance.name.value),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
+                              ],
+                            ))
                       ],
                     ),
 

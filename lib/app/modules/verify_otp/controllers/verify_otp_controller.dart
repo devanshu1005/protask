@@ -148,43 +148,12 @@ class VerifyOtpController extends GetxController {
         },
       );
 
-      // if (response != null && response['success'] == true) {
-      //   DialogHelper.showSuccess(
-      //     'Account created successfully!',
-      //     title: 'Welcome',
-      //     backgroundColor: Colors.green,
-      //   );
-
-      //   // 🧹 Clean up controllers before navigating
-      //   if (Get.isRegistered<LoginController>()) {
-      //     Get.delete<LoginController>(force: true);
-      //   }
-
-      //   if (Get.isRegistered<SignupController>()) {
-      //     Get.delete<SignupController>(force: true);
-      //   }
-
-      //   if (Get.isRegistered<VerifyOtpController>()) {
-      //     Get.delete<VerifyOtpController>(force: true);
-      //   }
-
-      //   await Future.delayed(const Duration(milliseconds: 300));
-
-      //   // ✅ Safe navigation: Widget + Binding
-      //   Get.offAll(() => LoginView(), binding: LoginBinding());
-      // }
-
       if (response != null && response['success'] == true) {
         DialogHelper.showSuccess(
           'Account created successfully!',
           title: 'Welcome',
           backgroundColor: Colors.green,
         );
-
-        // // Clean up stale controller just in case
-        // if (Get.isRegistered<LoginController>()) {
-        //   Get.delete<LoginController>();
-        // }
 
         await Future.delayed(const Duration(milliseconds: 300));
         Get.offAllNamed(Routes.LOGIN);
@@ -202,14 +171,25 @@ class VerifyOtpController extends GetxController {
 
   Future<void> resendOtp() async {
     try {
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 1));
+      LoaderView.customLogoLoader();
 
-      // show('OTP sent successfully!', isError: false);
-      _clearOtpFields();
-      _startResendTimer();
+      final response = await CallHelper().post(
+        '/auth/request-signup-otp',
+        data: {'email': emailId},
+      );
+
+      LoaderView.hideLoading();
+
+      if (response != null && response['success'] != false) {
+        DialogHelper.showSuccess('OTP sent to your email!');
+        _clearOtpFields();
+        _startResendTimer();
+      } else {
+        DialogHelper.showError(response?['message'] ?? 'Something went wrong');
+      }
     } catch (e) {
-      // _showSnackBar('Failed to resend OTP. Please try again.', isError: true);
+      LoaderView.hideLoading();
+      DialogHelper.showError('Failed to resend OTP. Please try again.');
     }
   }
 
