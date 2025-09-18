@@ -20,7 +20,6 @@ class SplashView extends GetView<SplashController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App Icon
               Container(
                 width: 120,
                 height: 120,
@@ -41,10 +40,7 @@ class SplashView extends GetView<SplashController> {
                   color: Color(0xFF8B7355),
                 ),
               ),
-
               const SizedBox(height: 40),
-
-              // App Name
               Text(
                 'ProTask',
                 style: AppFonts.heading1.copyWith(
@@ -53,10 +49,7 @@ class SplashView extends GetView<SplashController> {
                   fontWeight: AppFonts.bold,
                 ),
               ),
-
               const SizedBox(height: 12),
-
-              // App Description
               Text(
                 'Manage your tasks efficiently',
                 style: AppFonts.bodyLarge.copyWith(
@@ -64,10 +57,7 @@ class SplashView extends GetView<SplashController> {
                   fontSize: 18,
                 ),
               ),
-
               const SizedBox(height: 80),
-
-              // Reactive Loading Indicator Dots
               Obx(() {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,

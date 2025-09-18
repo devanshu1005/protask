@@ -67,6 +67,6 @@ class TaskModel {
     if (diff > 1 && diff <= 7) return 'This week';
     if (diff > 7 && diff <= 14) return 'Next week';
 
-    return DateFormat('dd MMM').format(dueDate); // Example: 14 Jul
+    return DateFormat('dd MMM').format(dueDate);
   }
 }

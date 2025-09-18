@@ -13,7 +13,6 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
     return Scaffold(
       body: Column(
         children: [
-          // Top gradient section with profile info
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
@@ -31,7 +30,6 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                 padding: const EdgeInsets.symmetric(vertical: 40.0),
                 child: Column(
                   children: [
-                    // Profile avatar
                     Container(
                       width: 80,
                       height: 80,
@@ -55,7 +53,6 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // Name
                     Obx(
                       () => Text(
                         AppGlobals.instance.name.value ?? 'User',
@@ -68,7 +65,6 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    // Email
                     Text(
                       AppGlobals.instance.email.value ?? 'Email not available',
                       style: TextStyle(
@@ -84,7 +80,6 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
               ),
             ),
           ),
-          // Menu items section
           Expanded(
             child: Container(
               color: const Color(0xFFF8FAFC), // AppColors.background
@@ -133,7 +128,6 @@ class ProfileScreenView extends GetView<ProfileScreenController> {
                     iconColor: const Color(0xFFDC2626), // AppColors.error
                     title: 'Logout',
                     onTap: () {
-                      // Handle logout
                       AppGlobals.instance.logout();
                     },
                     showArrow: false,

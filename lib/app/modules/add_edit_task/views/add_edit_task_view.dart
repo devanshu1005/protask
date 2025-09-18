@@ -43,7 +43,6 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Task Details Section
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16.0),
@@ -67,8 +66,6 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                             .copyWith(color: AppColors.textPrimary),
                       ),
                       const SizedBox(height: 20),
-
-                      // Title Field
                       Text(
                         'Title',
                         style: AppFonts.formLabel
@@ -107,8 +104,6 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                         ),
                       ),
                       const SizedBox(height: 16),
-
-                      // Description Field
                       Text(
                         'Description',
                         style: AppFonts.formLabel
@@ -150,10 +145,7 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
-                // Due Date Section
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16.0),
@@ -226,10 +218,7 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
-                // Priority Section
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16.0),
@@ -253,8 +242,6 @@ class AddEditTaskView extends GetView<AddEditTaskController> {
                             .copyWith(color: AppColors.textPrimary),
                       ),
                       const SizedBox(height: 16),
-
-                      // Priority Buttons
                       Obx(() => Row(
                             children: [
                               _buildPriorityButton('Low', 'low'),

@@ -6,7 +6,6 @@ import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
 import 'package:protask1/app/utils/widgets/loader_view.dart';
 
 class SignupController extends GetxController {
-  // Form controllers
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -15,11 +14,9 @@ class SignupController extends GetxController {
   final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
 
-  // Observable variables
   final RxBool isPasswordHidden = false.obs;
   final RxBool isConfirmPasswordHidden = false.obs;
   final isTermsAccepted = false.obs;
-  // final RxBool isLoading = false.obs;
   final mobileCharCount = 0.obs;
 
   @override
@@ -46,12 +43,10 @@ class SignupController extends GetxController {
     super.onClose();
   }
 
-  // Toggle password visibility
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
-  // Toggle confirm password visibility
   void toggleConfirmPasswordVisibility() {
     isConfirmPasswordHidden.value = !isConfirmPasswordHidden.value;
   }
@@ -60,7 +55,6 @@ class SignupController extends GetxController {
     isTermsAccepted.value = !isTermsAccepted.value;
   }
 
-  // Validate form
   bool validateForm() {
     if (fullNameController.text.trim().isEmpty) {
       DialogHelper.showError('Please enter your full name');
@@ -112,7 +106,6 @@ class SignupController extends GetxController {
       return false;
     }
 
-    // Validate age (between 13 and 120)
     int? age = int.tryParse(ageController.text.trim());
     if (age == null || age < 13 || age > 120) {
       DialogHelper.showError('Please enter a valid age between 13 and 120');

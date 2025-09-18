@@ -38,7 +38,6 @@ class LoaderView {
   }
 }
 
-
 class _LogoLoaderDialog extends StatefulWidget {
   @override
   State<_LogoLoaderDialog> createState() => __LogoLoaderDialogState();
@@ -54,8 +53,8 @@ class __LogoLoaderDialogState extends State<_LogoLoaderDialog>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1), // One cycle of scale up and down
-    )..repeat(reverse: true); // Reverses to create the pulsing effect
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true);
 
     _animation = Tween<double>(begin: 0.8, end: 1.2).animate(_controller);
   }

@@ -17,7 +17,7 @@ class TaskDetailScreenController extends GetxController {
 
   // void toggleTaskCompletion() {
   //   task.isCompleted = !task.isCompleted;
-  //   update(); // This will rebuild all GetBuilder widgets
+  //   update();
   // }
 
   Future<void> deleteTask(String taskId, String taskTitle) async {

@@ -345,13 +345,12 @@ class TaskDetailScreenView extends GetView<TaskDetailScreenController> {
   Widget _buildActionButtons() {
     return Column(
       children: [
-        // Edit button
         SizedBox(
           width: double.infinity,
           height: 54,
           child: ElevatedButton.icon(
             onPressed: () {
-             controller.editTask();
+              controller.editTask();
             },
             icon: const Icon(
               Icons.edit_outlined,
@@ -374,7 +373,6 @@ class TaskDetailScreenView extends GetView<TaskDetailScreenController> {
           ),
         ),
         const SizedBox(height: 12),
-        // Delete button
         SizedBox(
           width: double.infinity,
           height: 54,
@@ -418,10 +416,10 @@ class TaskDetailScreenView extends GetView<TaskDetailScreenController> {
     );
     final diff = dueDate.difference(today).inDays;
 
-    if (diff < 0) return AppColors.error; // Overdue
-    if (diff == 0) return AppColors.warning; // Due today
-    if (diff <= 3) return AppColors.warning; // Due soon
-    return AppColors.textSecondary; // Normal
+    if (diff < 0) return AppColors.error;
+    if (diff == 0) return AppColors.warning;
+    if (diff <= 3) return AppColors.warning;
+    return AppColors.textSecondary;
   }
 
   String _formatDate(DateTime date) {

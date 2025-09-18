@@ -11,7 +11,7 @@ class CommonInputField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final RxBool? isVisibleObs;
-  final Widget? suffixBuilder; // 👈 NEW
+  final Widget? suffixBuilder;
 
   const CommonInputField({
     super.key,
@@ -23,7 +23,7 @@ class CommonInputField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.isVisibleObs,
-    this.suffixBuilder, // 👈 NEW
+    this.suffixBuilder,
   });
 
   @override
@@ -89,4 +89,3 @@ class CommonInputField extends StatelessWidget {
     }
   }
 }
-

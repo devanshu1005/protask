@@ -20,8 +20,6 @@ class LoginView extends GetView<LoginController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 60),
-
-              // Welcome Title
               Text(
                 'Welcome Back',
                 style: AppFonts.heading1.copyWith(
@@ -30,9 +28,7 @@ class LoginView extends GetView<LoginController> {
                   fontWeight: AppFonts.bold,
                 ),
               ),
-
               const SizedBox(height: 8),
-
               Text(
                 'Sign in to continue',
                 style: AppFonts.bodyLarge.copyWith(
@@ -40,20 +36,14 @@ class LoginView extends GetView<LoginController> {
                   fontSize: 18,
                 ),
               ),
-
               const SizedBox(height: 60),
-
-              // Email Field
               CommonInputField(
                 icon: Icons.email_outlined,
                 hintText: 'Enter your email',
                 controller: controller.emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
-
               const SizedBox(height: 24),
-
-              // Password Field
               CommonInputField(
                 icon: Icons.lock_outline,
                 hintText: '••••••••',
@@ -61,10 +51,7 @@ class LoginView extends GetView<LoginController> {
                 isPassword: true,
                 isVisibleObs: controller.isPasswordObscured,
               ),
-
               const SizedBox(height: 40),
-
-              // Sign In Button
               SizedBox(
                 width: double.infinity,
                 height: 54,
@@ -88,10 +75,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 24),
-
-              // Forgot Password
               Center(
                 child: TextButton(
                   onPressed: controller.forgotPassword,
@@ -106,10 +90,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
-
               const Spacer(),
-
-              // Sign Up Link
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -142,7 +123,6 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 24),
             ],
           ),

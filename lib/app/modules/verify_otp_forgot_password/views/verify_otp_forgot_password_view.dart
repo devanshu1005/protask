@@ -50,8 +50,6 @@ class VerifyOtpForgotPasswordView
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-
-            // Header Section
             Container(
               width: 80,
               height: 80,
@@ -72,9 +70,7 @@ class VerifyOtpForgotPasswordView
                 size: 40,
               ),
             ),
-
             const SizedBox(height: 32),
-
             Text(
               'Verify Your Email',
               style: AppFonts.heading1.copyWith(
@@ -82,9 +78,7 @@ class VerifyOtpForgotPasswordView
               ),
               textAlign: TextAlign.center,
             ),
-
             const SizedBox(height: 12),
-
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
@@ -103,10 +97,7 @@ class VerifyOtpForgotPasswordView
                 ],
               ),
             ),
-
             const SizedBox(height: 48),
-
-            // OTP Input Section
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
@@ -128,20 +119,14 @@ class VerifyOtpForgotPasswordView
                       color: AppColors.textPrimary,
                     ),
                   ),
-
                   const SizedBox(height: 24),
-
-                  // OTP Input Fields
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: List.generate(6, (index) {
                       return _buildOtpField(index);
                     }),
                   ),
-
                   const SizedBox(height: 24),
-
-                  // Timer and Resend Section
                   Obx(
                     () => controller.canResend.value
                         ? TextButton(
@@ -174,10 +159,7 @@ class VerifyOtpForgotPasswordView
                 ],
               ),
             ),
-
             const SizedBox(height: 32),
-
-            // Verify Button
             Obx(() => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   width: double.infinity,
@@ -198,15 +180,12 @@ class VerifyOtpForgotPasswordView
                       ),
                     ),
                     child: Text(
-                            'Verify & Continue',
-                            style: AppFonts.button,
-                          ),
+                      'Verify & Continue',
+                      style: AppFonts.button,
+                    ),
                   ),
                 )),
-
             const SizedBox(height: 32),
-
-            // Help Section
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(

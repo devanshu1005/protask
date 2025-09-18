@@ -53,7 +53,6 @@ class EditProfileController extends GetxController {
       if (result is Map && result['success'] == false) {
         DialogHelper.showError(result['message'] ?? "Update failed");
       } else {
-        // Update local globals
         AppGlobals.instance.name.value = name;
         AppGlobals.instance.age.value = age;
         AppGlobals.instance.mobile.value = mobile;
@@ -61,7 +60,6 @@ class EditProfileController extends GetxController {
 
         DialogHelper.showSuccess("Profile updated successfully");
 
-// Wait a moment to let snackbar show before navigating back
         await Future.delayed(const Duration(milliseconds: 500));
         Get.back();
       }

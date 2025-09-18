@@ -21,7 +21,6 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header with greeting and stats
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
@@ -32,12 +31,10 @@ class HomeView extends GetView<HomeController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Row for greeting and avatar
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Greeting
                         Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,8 +62,6 @@ class HomeView extends GetView<HomeController> {
                             ],
                           ),
                         ),
-
-                        // Profile Avatar & Refresh
                         Obx(() => Row(
                               children: [
                                 IconButton(
@@ -99,10 +94,7 @@ class HomeView extends GetView<HomeController> {
                             ))
                       ],
                     ),
-
                     const SizedBox(height: 24),
-
-                    // Stats Row
                     Obx(() => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -116,10 +108,7 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 24),
-
-              // Filter Tabs
               Row(
                 children: [
                   Obx(() => _buildFilterTab(
@@ -132,10 +121,7 @@ class HomeView extends GetView<HomeController> {
                       controller.selectedFilter.value == 'Completed')),
                 ],
               ),
-
               const SizedBox(height: 20),
-
-              // Tasks List
               Expanded(
                 child: Obx(() => ListView.builder(
                       itemCount: controller.filteredTasks.length,
@@ -149,8 +135,6 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-
-      // Floating Action Button
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.toNamed(Routes.ADD_EDIT_TASK)?.then((result) {
@@ -237,7 +221,6 @@ class HomeView extends GetView<HomeController> {
       ),
       child: Row(
         children: [
-          // Checkbox
           GestureDetector(
             onTap: () => controller.toggleTask(task.id),
             child: AnimatedContainer(
@@ -261,15 +244,11 @@ class HomeView extends GetView<HomeController> {
                   : null,
             ),
           ),
-
           const SizedBox(width: 16),
-
-          // Task Content
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Task Title
                 Text(
                   task.title,
                   style: AppFonts.bodyMedium.copyWith(
@@ -284,13 +263,9 @@ class HomeView extends GetView<HomeController> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-
                 const SizedBox(height: 8),
-
-                // Priority and Due Date
                 Row(
                   children: [
-                    // Priority Badge
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
@@ -307,10 +282,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-
                     const SizedBox(width: 12),
-
-                    // Due Date with Icon
                     Expanded(
                       child: Row(
                         children: [
@@ -338,14 +310,10 @@ class HomeView extends GetView<HomeController> {
               ],
             ),
           ),
-
           const SizedBox(width: 12),
-
-          // Action Buttons
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Edit Icon
               GestureDetector(
                 onTap: () {
                   Get.toNamed(Routes.TASK_DETAIL_SCREEN, arguments: task)
@@ -377,10 +345,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
               ),
-
               const SizedBox(width: 8),
-
-              // Delete Icon
               GestureDetector(
                 onTap: () => controller.deleteTask(task.id, task.title),
                 child: Container(

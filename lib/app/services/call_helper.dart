@@ -145,7 +145,7 @@ class CallHelper {
     required String fileField,
     required String filePath,
     Map<String, dynamic>? otherFields,
-    String method = 'POST', 
+    String method = 'POST',
   }) async {
     try {
       final formData = FormData.fromMap({
@@ -215,10 +215,11 @@ extension DioPatchExtension on CallHelper {
     }
   }
 }
+
 extension ServerPing on CallHelper {
   Future<void> pingServer() async {
     try {
-      await _dio.get('/health'); // Your backend’s health endpoint
+      await _dio.get('/health');
       debugPrint("✅ Server is awake now!");
     } catch (e) {
       debugPrint("⚠️ Server wakeup failed: $e");

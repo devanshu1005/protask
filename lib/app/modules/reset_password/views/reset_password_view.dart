@@ -36,23 +36,12 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-
-              // Header Section
               _buildHeaderSection(),
-
               const SizedBox(height: 40),
-
-              // Reset Password Form
               _buildResetPasswordForm(),
-
               const SizedBox(height: 30),
-
-              // Reset Button
               _buildResetButton(),
-
               const SizedBox(height: 20),
-
-              // Back to Login Link
               _buildBackToLoginLink(),
             ],
           ),
@@ -65,7 +54,6 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Lock Icon
         Container(
           width: 64,
           height: 64,
@@ -86,18 +74,12 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
             size: 32,
           ),
         ),
-
         const SizedBox(height: 24),
-
-        // Title
         Text(
           'Create New Password',
           style: AppFonts.withColor(AppFonts.heading2, AppColors.textPrimary),
         ),
-
         const SizedBox(height: 8),
-
-        // Subtitle
         RichText(
           text: TextSpan(
             style: AppFonts.withColor(
@@ -120,7 +102,6 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // New Password Field
         _buildPasswordField(
           label: 'New Password',
           hint: 'Enter your new password',
@@ -129,10 +110,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
           onChanged: controller.onNewPasswordChanged,
           validator: controller.validateNewPassword,
         ),
-
         const SizedBox(height: 20),
-
-        // Confirm Password Field
         _buildPasswordField(
           label: 'Confirm Password',
           hint: 'Confirm your new password',
@@ -141,10 +119,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
           onChanged: controller.onConfirmPasswordChanged,
           validator: controller.validateConfirmPassword,
         ),
-
         const SizedBox(height: 16),
-
-        // Password Requirements
         _buildPasswordRequirements(),
       ],
     );

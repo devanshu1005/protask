@@ -10,16 +10,13 @@ import 'package:protask1/app/utils/widgets/loader_view.dart';
 class ResetPasswordController extends GetxController {
   final String emailId = Get.arguments['emailId'] ?? '';
 
-  // Form fields
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  // Observable states
   final isNewPasswordObscured = true.obs;
   final isConfirmPasswordObscured = true.obs;
   final isLoading = false.obs;
 
-  // Password validation states
   final hasMinLength = false.obs;
   final hasUppercase = false.obs;
   final hasLowercase = false.obs;
@@ -27,17 +24,14 @@ class ResetPasswordController extends GetxController {
   final hasSpecialChar = false.obs;
   final passwordsMatch = false.obs;
 
-  // Form validation
   final isFormValid = false.obs;
 
-  // Error messages
   final newPasswordError = ''.obs;
   final confirmPasswordError = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Listen to form changes to update validation
     ever(hasMinLength, (_) => _updateFormValidation());
     ever(hasUppercase, (_) => _updateFormValidation());
     ever(hasLowercase, (_) => _updateFormValidation());
@@ -53,7 +47,6 @@ class ResetPasswordController extends GetxController {
     super.onClose();
   }
 
-  // Toggle password visibility
   void toggleNewPasswordVisibility() {
     isNewPasswordObscured.toggle();
   }
@@ -62,7 +55,6 @@ class ResetPasswordController extends GetxController {
     isConfirmPasswordObscured.toggle();
   }
 
-  // Password validation methods
   void onNewPasswordChanged(String value) {
     newPasswordController.text = value;
     _validatePassword(value);
@@ -97,7 +89,6 @@ class ResetPasswordController extends GetxController {
         passwordsMatch.value;
   }
 
-  // Form validation methods for TextFormField
   String? validateNewPassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password is required';
@@ -165,7 +156,6 @@ class ResetPasswordController extends GetxController {
     }
   }
 
-  // Additional utility methods
   void clearForm() {
     newPasswordController.clear();
     confirmPasswordController.clear();

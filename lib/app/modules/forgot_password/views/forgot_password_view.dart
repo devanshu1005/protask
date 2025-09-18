@@ -31,8 +31,6 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 32),
-
-              // Illustration Container
               Center(
                 child: Container(
                   width: 120,
@@ -55,10 +53,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 40),
-
-              // Title
               Center(
                 child: Text(
                   'Forgot Password?',
@@ -68,10 +63,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 12),
-
-              // Subtitle
               Center(
                 child: Text(
                   'Don\'t worry! Enter your email address and we\'ll send you a otp to reset your password.',
@@ -82,10 +74,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   textAlign: TextAlign.center,
                 ),
               ),
-
               const SizedBox(height: 48),
-
-              // Email Field
               Text(
                 'Email Address',
                 style: AppFonts.formLabel.copyWith(
@@ -100,8 +89,6 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 32),
-
-              // Reset Password Button
               SizedBox(
                 width: double.infinity,
                 height: 56,
@@ -124,12 +111,8 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 24),
-
               const Spacer(),
-
-              // Divider
               Row(
                 children: [
                   Expanded(
@@ -155,10 +138,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 24),
-
-              // Back to Login Button
               SizedBox(
                 width: double.infinity,
                 height: 56,
@@ -193,7 +173,6 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 32),
             ],
           ),

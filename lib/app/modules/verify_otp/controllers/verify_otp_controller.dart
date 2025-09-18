@@ -8,13 +8,11 @@ import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
 import 'package:protask1/app/utils/widgets/loader_view.dart';
 
 class VerifyOtpController extends GetxController {
-  // OTP related variables
   final List<TextEditingController> otpControllers =
       List.generate(6, (index) => TextEditingController());
   final List<FocusNode> otpFocusNodes =
       List.generate(6, (index) => FocusNode());
 
-  // Reactive variables
   final otpCode = ''.obs;
   // final isLoading = false.obs;
   final canResend = false.obs;
@@ -25,7 +23,6 @@ class VerifyOtpController extends GetxController {
   final String mobile = Get.arguments['mobile'];
   final String age = Get.arguments['age'];
 
-  // Timer for resend functionality
   Timer? _resendTimer;
 
   @override
@@ -33,7 +30,6 @@ class VerifyOtpController extends GetxController {
     super.onInit();
     _startResendTimer();
 
-    // Add listeners to all OTP controllers
     for (int i = 0; i < otpControllers.length; i++) {
       otpControllers[i].addListener(() {
         _updateOtpCode();
@@ -43,7 +39,6 @@ class VerifyOtpController extends GetxController {
 
   @override
   void onClose() {
-    // Dispose controllers and focus nodes
     for (int i = 0; i < otpControllers.length; i++) {
       otpControllers[i].dispose();
       otpFocusNodes[i].dispose();
@@ -52,18 +47,14 @@ class VerifyOtpController extends GetxController {
     super.onClose();
   }
 
-  /// Handle OTP input change
   void onOtpChanged(String value, int index) {
     if (value.isNotEmpty) {
-      // Move to next field if not the last field
       if (index < 5) {
         otpFocusNodes[index + 1].requestFocus();
       } else {
-        // Last field, remove focus
         otpFocusNodes[index].unfocus();
       }
     } else {
-      // Move to previous field if not the first field
       if (index > 0) {
         otpFocusNodes[index - 1].requestFocus();
       }
@@ -72,7 +63,6 @@ class VerifyOtpController extends GetxController {
     _updateOtpCode();
   }
 
-  /// Update the complete OTP code
   void _updateOtpCode() {
     String code = '';
     for (var controller in otpControllers) {
@@ -81,7 +71,6 @@ class VerifyOtpController extends GetxController {
     otpCode.value = code;
   }
 
-  /// Start the resend timer
   void _startResendTimer() {
     remainingTime.value = 60;
     canResend.value = false;
@@ -96,7 +85,6 @@ class VerifyOtpController extends GetxController {
     });
   }
 
-  /// Verify OTP
   Future<void> verifyOtp() async {
     if (otpCode.value.length != 6) {
       DialogHelper.showError('Please enter a valid 6-digit code');

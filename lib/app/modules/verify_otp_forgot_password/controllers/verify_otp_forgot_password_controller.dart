@@ -8,7 +8,7 @@ import 'package:protask1/app/utils/widgets/dialogue_helper.dart';
 import 'package:protask1/app/utils/widgets/loader_view.dart';
 
 class VerifyOtpForgotPasswordController extends GetxController {
-    final List<TextEditingController> otpControllers =
+  final List<TextEditingController> otpControllers =
       List.generate(6, (index) => TextEditingController());
   final List<FocusNode> otpFocusNodes =
       List.generate(6, (index) => FocusNode());
@@ -25,7 +25,6 @@ class VerifyOtpForgotPasswordController extends GetxController {
     super.onInit();
     _startResendTimer();
 
-    // Add listeners to all OTP controllers
     for (int i = 0; i < otpControllers.length; i++) {
       otpControllers[i].addListener(() {
         _updateOtpCode();
@@ -35,7 +34,6 @@ class VerifyOtpForgotPasswordController extends GetxController {
 
   @override
   void onClose() {
-    // Dispose controllers and focus nodes
     for (int i = 0; i < otpControllers.length; i++) {
       otpControllers[i].dispose();
       otpFocusNodes[i].dispose();
@@ -44,18 +42,14 @@ class VerifyOtpForgotPasswordController extends GetxController {
     super.onClose();
   }
 
-  /// Handle OTP input change
   void onOtpChanged(String value, int index) {
     if (value.isNotEmpty) {
-      // Move to next field if not the last field
       if (index < 5) {
         otpFocusNodes[index + 1].requestFocus();
       } else {
-        // Last field, remove focus
         otpFocusNodes[index].unfocus();
       }
     } else {
-      // Move to previous field if not the first field
       if (index > 0) {
         otpFocusNodes[index - 1].requestFocus();
       }
@@ -64,7 +58,6 @@ class VerifyOtpForgotPasswordController extends GetxController {
     _updateOtpCode();
   }
 
-  /// Update the complete OTP code
   void _updateOtpCode() {
     String code = '';
     for (var controller in otpControllers) {
@@ -73,7 +66,6 @@ class VerifyOtpForgotPasswordController extends GetxController {
     otpCode.value = code;
   }
 
-  /// Start the resend timer
   void _startResendTimer() {
     remainingTime.value = 60;
     canResend.value = false;
@@ -88,7 +80,6 @@ class VerifyOtpForgotPasswordController extends GetxController {
     });
   }
 
-  /// Verify OTP
   Future<void> verifyOtp() async {
     if (otpCode.value.length != 6) {
       DialogHelper.showError('Please enter a valid 6-digit code');
@@ -112,7 +103,8 @@ class VerifyOtpForgotPasswordController extends GetxController {
 
       if (response != null && response['success'] == true) {
         DialogHelper.showSuccess('OTP verified successfully!');
-        Get.offAndToNamed(Routes.RESET_PASSWORD, arguments: {'emailId': emailId});
+        Get.offAndToNamed(Routes.RESET_PASSWORD,
+            arguments: {'emailId': emailId});
       } else {
         _clearOtpFields();
         DialogHelper.showError(
@@ -126,14 +118,10 @@ class VerifyOtpForgotPasswordController extends GetxController {
     }
   }
 
-  
-
   Future<void> resendOtp() async {
     try {
-      // Simulate API call
       await Future.delayed(const Duration(seconds: 1));
 
-      // show('OTP sent successfully!', isError: false);
       _clearOtpFields();
       _startResendTimer();
     } catch (e) {

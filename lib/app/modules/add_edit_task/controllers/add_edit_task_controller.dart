@@ -21,11 +21,9 @@ class AddEditTaskController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // Initialize controllers
     titleController = TextEditingController();
     descriptionController = TextEditingController();
 
-    // Read arguments if passed
     if (Get.arguments != null && Get.arguments is Map) {
       final args = Get.arguments as Map;
       task = args['task'] as TaskModel?;
@@ -89,7 +87,7 @@ class AddEditTaskController extends GetxController {
     } catch (e) {
       DialogHelper.showError('Something went wrong. Please try again.');
     } finally {
-      await LoaderView.hideLoading(); // ✅ Always hide loader
+      await LoaderView.hideLoading();
       if (isEdit) {
         Get.offAllNamed(Routes.HOME);
       } else {
